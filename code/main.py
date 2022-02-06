@@ -6,7 +6,7 @@ from level import Level
 class Game:
     def __init__(self):
 
-        # general setup
+        # general setup fo pygame
         pygame.init()
         pygame.display.set_caption("Zelda")  # nome della finestra di gioco
         self.screen = pygame.display.set_mode((WIDTH, HEIGTH))

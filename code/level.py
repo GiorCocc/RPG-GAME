@@ -20,6 +20,7 @@ class Level:
         self.create_map()
 
     def create_map(self):
+        # dizionario del layout e delle grafiche
         layouts = {
             "boundary": import_csv_layout("map/map_FloorBlocks.csv"),
             "grass": import_csv_layout("map/map_Grass.csv"),
@@ -31,24 +32,38 @@ class Level:
         }
         # print(graphics)
 
-        for style,layout in layouts.items():
-            for row_index,row in enumerate(layout):
+        for style, layout in layouts.items():
+            for row_index, row in enumerate(layout):
                 for col_index, col in enumerate(row):
-                    if col != '-1':
+                    if col != "-1":
                         x = col_index * TILESIZE
                         y = row_index * TILESIZE
-                        
-                        if style == 'boundary':
-                            Tile((x,y),[self.obstacle_sprites],'invisible')
-                        
-                        if style == 'grass':
-                            random_grass_image = choice(graphics['grass'])
-                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'grass',random_grass_image)
-                        
-                        if style == 'object':
-                            surf = graphics['objects'][int(col)]
-                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 
+                        # creazione del bordo della mappa
+                        if style == "boundary":
+                            Tile((x, y), [self.obstacle_sprites], "invisible")
+
+                        # creazione degli oggetti erbosi sulla mappa
+                        if style == "grass":
+                            random_grass_image = choice(graphics["grass"])
+                            Tile(
+                                (x, y),
+                                [self.visible_sprites, self.obstacle_sprites],
+                                "grass",
+                                random_grass_image,
+                            )
+
+                        # creazione degli oggetti di scena
+                        if style == "object":
+                            surf = graphics["objects"][int(col)]
+                            Tile(
+                                (x, y),
+                                [self.visible_sprites, self.obstacle_sprites],
+                                "object",
+                                surf,
+                            )
+
+        # posizione del giocatore a circa il centro della mappa
         self.player = Player(
             (2000, 1430), [self.visible_sprites], self.obstacle_sprites
         )
@@ -57,7 +72,7 @@ class Level:
         # update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
-        # debug(self.player.direction)
+        debug(self.player.status)
 
 
 class YSortCameraGroup(pygame.sprite.Group):
@@ -81,7 +96,6 @@ class YSortCameraGroup(pygame.sprite.Group):
         floor_offset_pos = self.floor_rect.topleft - self.offset
         self.display_surface.blit(self.floor_surf, floor_offset_pos)
 
-        # for sprite in self.sprites():
         # nel momento in cui creo la mappa, alcuni blocchi vengono creati dopo il giocatore. Ordino i blocchi in modo che il giocatore, quando si trova sotto un blocco, sia più in avanti
         for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset
