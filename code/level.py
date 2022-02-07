@@ -1,5 +1,6 @@
 from random import choice
 import pygame
+from ui import UI
 from weapon import Weapon
 from player import Player
 from settings import *
@@ -22,6 +23,9 @@ class Level:
         
         # sprite setup
         self.create_map()
+
+        # interfaccia 
+        self.ui=UI()
 
     def create_map(self):
         # dizionario del layout e delle grafiche
@@ -83,12 +87,13 @@ class Level:
         if self.current_attack:
             self.current_attack.kill()
         self.current_attack = None
-
+    
     def run(self):
         # update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
-        debug(self.player.status)
+        self.ui.display(self.player)
+        # debug(self.player.status)
 
 
 class YSortCameraGroup(pygame.sprite.Group):
