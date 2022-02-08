@@ -19,6 +19,12 @@ class UI:
             weapon = pygame.image.load(path).convert_alpha()
             self.weapon_graphics.append(weapon)
 
+        self.magic_graphics = []
+        for magic in magic_data.values():
+            path = magic["graphic"]
+            magic = pygame.image.load(path).convert_alpha()
+            self.magic_graphics.append(magic)
+
     def display(self, player):
         self.show_bar(
             player.health, player.stats["health"], self.health_bar_rect, HEALTH_COLOR
@@ -29,13 +35,21 @@ class UI:
 
         self.show_exp(player.exp)  # esperienza
         self.weapon_overlay(player.weapon_index, not player.can_switch_weapon)  # arma
-        # self.selection_box(80, 635)  # magia
+        self.magic_overlay(player.magic_index, not player.can_switch_magic)  # magia
 
     def weapon_overlay(self, weapon_index, has_switched):
         bg_rect = self.selection_box(10, 630, has_switched)
         weapon_surface = self.weapon_graphics[weapon_index]
         weapon_rect = weapon_surface.get_rect(center=bg_rect.center)
+
         self.display_surface.blit(weapon_surface,weapon_rect)
+
+    def magic_overlay(self, magic_index, has_switched):
+        bg_rect = self.selection_box(80, 635, has_switched)
+        magic_surface = self.magic_graphics[magic_index]
+        magic_rect = magic_surface.get_rect(center=bg_rect.center)
+
+        self.display_surface.blit(magic_surface,magic_rect)
 
     def selection_box(self, left, top, has_switched):
         bg_rect = pygame.Rect(left, top, ITEM_BOX_SIZE, ITEM_BOX_SIZE)

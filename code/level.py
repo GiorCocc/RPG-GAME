@@ -77,9 +77,15 @@ class Level:
             [self.visible_sprites],
             self.obstacle_sprites,
             self.create_attack,
+            self.create_magic,
             self.destroy_attack,
         )
 
+    def create_magic(self, style, strength, cost):
+        print(style)
+        print(strength)
+        print(cost)
+    
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites])
 
