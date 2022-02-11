@@ -8,7 +8,7 @@ class Game:
 
         # general setup fo pygame
         pygame.init()
-        pygame.display.set_caption("Zelda")  # nome della finestra di gioco
+        pygame.display.set_caption("CloudBlast (Beta)")  # nome della finestra di gioco
         self.screen = pygame.display.set_mode((WIDTH, HEIGTH))
         self.clock = pygame.time.Clock()
         self.level = Level()
