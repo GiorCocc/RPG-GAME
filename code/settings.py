@@ -3,6 +3,11 @@ WIDTH = 1280
 HEIGTH = 720
 FPS = 60
 TILESIZE = 64
+HITBOX_OFFSET = {
+    'player': -26,
+    'object': -40,
+    'grass': -10,
+    'invisible': 0}
 
 # ui
 BAR_HEIGHT = 20
@@ -78,7 +83,7 @@ monster_data = {
         "exp": 100,
         "damage": 20,
         "attack_type": "slash",
-        "attack_sound": "../audio/attack/slash.wav",
+        "attack_sound": "audio/attack/slash.wav",
         "speed": 3,
         "resistance": 3,
         "attack_radius": 80,
@@ -89,7 +94,7 @@ monster_data = {
         "exp": 250,
         "damage": 40,
         "attack_type": "claw",
-        "attack_sound": "../audio/attack/claw.wav",
+        "attack_sound": "audio/attack/claw.wav",
         "speed": 2,
         "resistance": 3,
         "attack_radius": 120,
@@ -100,7 +105,7 @@ monster_data = {
         "exp": 110,
         "damage": 8,
         "attack_type": "thunder",
-        "attack_sound": "../audio/attack/fireball.wav",
+        "attack_sound": "audio/attack/fireball.wav",
         "speed": 4,
         "resistance": 3,
         "attack_radius": 60,
@@ -111,7 +116,7 @@ monster_data = {
         "exp": 120,
         "damage": 6,
         "attack_type": "leaf_attack",
-        "attack_sound": "../audio/attack/slash.wav",
+        "attack_sound": "audio/attack/slash.wav",
         "speed": 3,
         "resistance": 3,
         "attack_radius": 50,
