@@ -10,12 +10,14 @@ from settings import *
 from tile import Tile
 from debug import debug
 from support import *
+from upgrade import Upgrade
 
 
 class Level:
     def __init__(self):
         # get display surface
         self.display_surface = pygame.display.get_surface()
+        self.game_paused=False
 
         # sprite group setup
         self.visible_sprites = YSortCameraGroup()
@@ -31,6 +33,7 @@ class Level:
 
         # interfaccia
         self.ui = UI()
+        self.upgrade=Upgrade(self.player)
 
         # particles
         self.animation_player = AnimationPlayer()
@@ -112,7 +115,7 @@ class Level:
                                     [self.visible_sprites, self.attackable_sprites],
                                     self.obstacle_sprites,
                                     self.damage_player,
-                                    self.trigger_death_particles,
+                                    self.trigger_death_particles,self.add_exp
                                 )
 
     def create_magic(self, style, strength, cost):
@@ -133,13 +136,18 @@ class Level:
         self.current_attack = None
 
     def run(self):
-        # update and draw the game
         self.visible_sprites.custom_draw(self.player)
-        self.visible_sprites.update()
-        self.visible_sprites.enemy_update(self.player)
-        self.player_attack_logic()
         self.ui.display(self.player)
-        # debug(self.player.status)
+
+        if self.game_paused:
+            self.upgrade.display()
+            # display menu
+        else:
+            # run game 
+            self.visible_sprites.update()
+            self.visible_sprites.enemy_update(self.player)
+            self.player_attack_logic()
+
 
     def player_attack_logic(self):
         if self.attack_sprites:
@@ -167,6 +175,12 @@ class Level:
             particle_type, pos, [self.visible_sprites]
         )
 
+    def add_exp(self,amount):
+        self.player.exp+=amount
+    
+    def toggle_menu(self):
+        self.game_paused=not self.game_paused
+    
     def damage_player(self, amount, attack_type):
         if self.player.vulnerable:
             self.player.health -= amount
