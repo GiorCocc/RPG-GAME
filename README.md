@@ -8,6 +8,8 @@ Disponibili diversi nemici, tutti caratterizzati singolarmente che generano azio
 
 Prossime iterazioni, mondi e meccaniche ancora da sviluppare
 
+Eseguibile disponibile nella cartella code\main.exe
+
 ## Comandi di base
 
 | Comando              | Tasto                    | Descrizione                                                  |
